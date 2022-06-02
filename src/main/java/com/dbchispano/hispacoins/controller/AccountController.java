@@ -23,7 +23,7 @@ public class AccountController {
     }
 
     @GetMapping
-    public Optional<Account> getAccount(@RequestParam UUID uuid) {
+    public Optional<Account> getAccount(@RequestParam(name = "id") UUID uuid) {
         return SERVICE.get(uuid);
     }
 

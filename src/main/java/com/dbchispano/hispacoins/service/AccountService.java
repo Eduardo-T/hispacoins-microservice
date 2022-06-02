@@ -1,41 +1,20 @@
 package com.dbchispano.hispacoins.service;
 
 import com.dbchispano.hispacoins.domain.Account;
-import com.dbchispano.hispacoins.repository.AccountRepository;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
 
-@Service
-public class AccountService {
+public interface AccountService {
 
-    private final AccountRepository ACCOUNT_REPOSITORY;
+    Account createAccount(String nick);
 
-    public AccountService(AccountRepository accountRepository) {
-        this.ACCOUNT_REPOSITORY = accountRepository;
-    }
+    Account createAccount(Account account);
 
-    public Account createAccount(String nick) {
-        Account account = new Account();
-        account.setNick(nick);
-        return createAccount(account);
-    }
+    Iterable<Account> getAll();
 
-    public Account createAccount(Account account) {
-        return ACCOUNT_REPOSITORY.findByNick(account.getNick()).or(() -> ACCOUNT_REPOSITORY.findById(account.getId() == null ? UUID.randomUUID() : account.getId())).orElseGet(() -> ACCOUNT_REPOSITORY.save(account));
-    }
+    Optional<Account> get(UUID uuid);
 
-    public Iterable<Account> getAll() {
-        return ACCOUNT_REPOSITORY.findAll();
-    }
-
-    public Optional<Account> get(UUID uuid) {
-        return ACCOUNT_REPOSITORY.findById(uuid);
-    }
-
-    public Optional<Account> get(String nick) {
-        return ACCOUNT_REPOSITORY.findByNick(nick);
-    }
+    Optional<Account> get(String nick);
 
 }
